@@ -7,3 +7,11 @@ export async function getCategorias() {
 
   return response.json()
 }
+
+export async function getProdutos() {
+  const response = await fetch('http://localhost:8080/produto/listar-produtos');
+  if (!response.ok) {
+    throw new Error('Erro ao buscar produtos')
+  }
+  return response.json()
+}
