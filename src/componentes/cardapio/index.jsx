@@ -1,17 +1,18 @@
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { getProdutos } from '../services/api'
+import { Sidebar } from '../sidebar'
 
 
 export const Cardapio = () => {
   const [Produtos, setProdutos] = useState([])
   const [loading, setLoading] = useState(true)
-  const { id } = useParams()
+  const { pedidoId, idCategoria } = useParams()
 
   useEffect(() => {
     async function carregarProdutos() {
       try {
-        const data = await getProdutos(id)
+        const data = await getProdutos(idCategoria)
         setProdutos(data)
       } catch (error) {
         console.error(error)
@@ -21,16 +22,18 @@ export const Cardapio = () => {
     }
 
     carregarProdutos()
-  }, [id])
+  }, [idCategoria])
 
   return (
-    <div
-      id="produtos"
-      className="min-h-screen bg-[#121212] px-6 py-10 flex justify-center"
-    >
-      <ul className="w-full max-w-3xl space-y-8 gap-[35px] grid">
-        {loading ? (
-          <p className="text-center text-gray-300 text-lg">
+    <div className="flex">
+      <Sidebar />
+      <div
+        id="produtos"
+        className="min-h-screen bg-[#121212] px-6 py-10 flex justify-center w-full"
+      >
+        <ul className="w-full max-w-3xl space-y-8 gap-[35px] grid">
+          {loading ? (
+            <p className="text-center text-gray-300 text-lg">
             Carregando...
           </p>
         ) : (
@@ -78,5 +81,6 @@ export const Cardapio = () => {
         )}
       </ul>
     </div>
+  </div>
   )
 }

@@ -2,6 +2,8 @@ import { Routes, Route } from 'react-router-dom'
 import { Sidebar } from './componentes/sidebar'
 import { Cardapio } from './componentes/cardapio/index.jsx'
 import './index.css'
+import { Mesas } from './componentes/mesas/index.jsx'
+import { CriaPedido } from './componentes/criaPedido/index.jsx'
 
 
 function App() {
@@ -9,13 +11,11 @@ function App() {
     <>
     <section className=''>
       
-      <Sidebar />
-
-<div className="cardapio text-white ml-[200px] overflow-y-auto">
-      <Routes>  
-       <Route path="/cardapio/:id" element={<Cardapio />} />
+    <Routes>  
+        <Route path="/" element={<Mesas />} />
+        <Route path="/cardapio/:pedidoId/:idCategoria" element={<Cardapio />} />
+        <Route path="/pedido/:mesaId" element={<CriaPedido />} />
       </Routes>
- </div>
     </section>
     </>
   )
