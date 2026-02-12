@@ -7,13 +7,13 @@ import './index.css'
 function App() {
   return (
     <>
-    <section>
+    <section className=''>
       
       <Sidebar />
 
-<div className="cardapio ml-[150px] p-6">
+<div className="cardapio text-white ml-[200px] overflow-y-auto">
       <Routes>  
-        <Route path="/" element={<Cardapio />} />
+       <Route path="/cardapio/:id" element={<Cardapio />} />
       </Routes>
  </div>
     </section>

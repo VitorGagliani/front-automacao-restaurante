@@ -4,8 +4,7 @@ import { useEffect, useState } from 'react'
 import { getCategorias } from '../services/api'
 
 export const Sidebar = () => {
-  const [categorias, setCategorias] = useState([])
-  const [open, setOpen] = useState(true)
+  const [categorias, setCategorias] = useState([])  
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
@@ -24,29 +23,27 @@ export const Sidebar = () => {
   }, [])
 
   return (
-    <nav className={`sidebar ${open ? 'open' : 'closed'}`}>
+    <nav className='sidebar'>
       <div className="sidebar-content">
 
         <div className="sidebar-header">
-          <h2>{open && 'Categorias'}
-          <button className="toggle-btn" onClick={() => setOpen(!open)}>
-            ☰
-          </button>
+          <h2>{'Categorias'}
           </h2>
         </div>
 
         {loading ? (
+          console.log(categorias),
           <p>Carregando...</p>
         ) : (
           <ul>
-            {categorias.map(categoria => (
-              <li key={categoria.id}>
-                <Link to={categoria.rota} className="links">
-                  <p>{open && categoria.nome}</p>
-                </Link>
-              </li>
-            ))}
-          </ul>
+  {categorias.map(categoria => (
+    <li key={categoria.id}>
+     <Link to={`/cardapio/${categoria.id}`} className="links">
+  {open && <p>{categoria.nome}</p>}
+</Link>
+    </li>
+  ))}
+</ul>
         )}
 
       </div>

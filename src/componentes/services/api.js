@@ -8,10 +8,20 @@ export async function getCategorias() {
   return response.json()
 }
 
-export async function getProdutos() {
-  const response = await fetch('http://localhost:8080/produto/listar-produtos');
+export async function getProdutos(categoriaId) {
+  const response = await fetch(  `http://localhost:8080/produto/listar/${categoriaId}`);
   if (!response.ok) {
     throw new Error('Erro ao buscar produtos')
   }
+  
+  return response.json()
+}
+
+export async function getMesas() {
+  const response = await fetch(  `http://localhost:8080/mesa/listar`);
+  if (!response.ok) {
+    throw new Error('Erro ao buscar produtos')
+  }
+  
   return response.json()
 }
