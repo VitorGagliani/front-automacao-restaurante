@@ -75,6 +75,12 @@ export const Cardapio = () => {
                     R$ {produto.preco}
                   </p>
                 </div>
+
+                <div className="flex-col justify-center ml-auto">
+                  <button className="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition cursor-pointer">
+                    Adicionar
+                  </button>
+                </div>
               </div>
             </li>
           ))

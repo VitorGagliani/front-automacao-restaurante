@@ -31,17 +31,18 @@ export const CriaPedido = () => {
   }
 
   return (
-    <div className="min-h-screen bg-[#121212] px-6 py-10 flex justify-center items-center">
+    <div className="min-h-screen bg-white px-6 py-10 flex justify-center items-center">
       <div>
-        <h1 className="text-white text-2xl mb-6 font-medium text-center">
+        <img src="/public/Zesty-Logo-Preto.svg" className="w-[250px] mb-6" alt="" />
+        <h1 className="text-white text-2xl mb-6 font-medium text-center text-[#414141]">
           Mesa {mesaId}
         </h1>
         <div className="form text-white grid gap-6 mb-7 placeholder:text-gray-600">
-          <input type="text" name="nomeCliente" id="nomeCliente" placeholder="Insira seu nome" className="bg-blue-50 px-2 py-2 rounded-xl text-gray-700 placeholder:text-gray-600"
+          <input type="text" name="nomeCliente" id="nomeCliente" placeholder="Insira seu nome" className="bg-blue-50 px-2 py-2 rounded-xl text-gray-700 placeholder:text-gray-600" required
           onChange={(e) => setNome(e.target.value)}
           />
 
-          <input type="number" name="telefoneCliente" id="telefoneCliente" placeholder="Insira seu telefone" className="bg-blue-50 px-2 py-2 rounded-xl text-gray-700 placeholder:text-gray-600"
+          <input type="tel" name="telefoneCliente" id="telefoneCliente" placeholder="Insira seu telefone" className="bg-blue-50 px-2 py-2 rounded-xl text-gray-700 placeholder:text-gray-600" required= {true}
           onChange={(e) => setTelefone(e.target.value)}
           />
 
@@ -49,7 +50,7 @@ export const CriaPedido = () => {
 
           <button 
           onClick={handleCriarPedido}
-          className="w-full px-5 text-xl py-3 rounded text-white bg-blue-500 hover:bg-blue-600 transition">
+          className="w-full px-5 text-xl py-3 rounded text-[#414141] bg-[#E1FED1] hover:bg-[#afde9c] transition">
           Iniciar Pedido
         </button>
       </div>

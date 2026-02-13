@@ -16,12 +16,19 @@
   padding: 20px 15px; 
 }
 
-.sidebar-content h2{
+.sidebar-content{
   text-align: center;
   margin-bottom: 60px;
   font-size: 25px;
 }
 
+
+.sidebar-content ul{
+   height: 300px;
+  overflow-y: auto;
+  border: 0, 0, 0, 1px solid #ccc;
+  height: 100vh;
+}
 
 
 .sidebar-content ul, li{
@@ -83,6 +90,8 @@ background-color: #1b263b;
   justify-content: space-between;
   place-content: center;;
   margin-top: 20px;
+  margin-bottom: 60px;
+  gap: 10px;
 }
 
 .toggle-btn {

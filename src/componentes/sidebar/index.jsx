@@ -27,7 +27,8 @@ export const Sidebar = () => {
     <nav className='sidebar'>
       <div className="sidebar-content">
 
-        <div className="sidebar-header">
+        <div className="sidebar-header items-center gap-2">
+          <img src="/public/Zesty-Logo.svg" className='w-[40px]' alt="" />
           <h2>{'Categorias'}
           </h2>
         </div>
