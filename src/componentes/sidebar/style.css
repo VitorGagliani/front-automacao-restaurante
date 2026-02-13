@@ -6,8 +6,8 @@
   left: 0;
   width: 200px;        
   height: 100vh;
-  background-color: #000814;
-  color: white;
+  background-color: white;
+  color: #414141;
   margin: 0;
   padding: 0;
 }
@@ -53,12 +53,12 @@
 }
 
 .sidebar-content li:hover{
-background-color: #1b263b;
+background-color: #f0f7ee;
 }
 
 .links{
   text-decoration: none;
-  color: white;
+  color: #414141;
   display: flex;
   align-items: center;
   padding: 5px;
@@ -66,8 +66,7 @@ background-color: #1b263b;
 
 .sidebar {
   height: 100vh;
-  background: #1e1e1e;
-  color: white;
+  color: #414141;
   transition: width 0.3s ease;
   overflow: hidden;
 }
@@ -97,7 +96,7 @@ background-color: #1b263b;
 .toggle-btn {
   background: none;
   border: none;
-  color: white;
+  color: #414141;
   font-size: 22px;
   cursor: pointer;
 }
@@ -106,7 +105,6 @@ background-color: #1b263b;
   display: flex;
   align-items: center;
   padding: 10px;
-  color: white;
   text-decoration: none;
 }
 

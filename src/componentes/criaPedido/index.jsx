@@ -34,7 +34,7 @@ export const CriaPedido = () => {
     <div className="min-h-screen bg-white px-6 py-10 flex justify-center items-center">
       <div>
         <img src="/public/Zesty-Logo-Preto.svg" className="w-[250px] mb-6" alt="" />
-        <h1 className="text-white text-2xl mb-6 font-medium text-center text-[#414141]">
+        <h1 className=" text-2xl mb-6 font-medium text-center text-[#414141]">
           Mesa {mesaId}
         </h1>
         <div className="form text-white grid gap-6 mb-7 placeholder:text-gray-600">

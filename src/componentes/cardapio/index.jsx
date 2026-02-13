@@ -29,7 +29,7 @@ export const Cardapio = () => {
       <Sidebar />
       <div
         id="produtos"
-        className="min-h-screen bg-[#121212] px-6 py-10 flex justify-center w-full"
+        className="min-h-screen bg-white  px-6 py-10 flex justify-center w-full"
       >
         <ul className="w-full max-w-3xl space-y-8 gap-[35px] grid">
           {loading ? (
@@ -41,7 +41,7 @@ export const Cardapio = () => {
             <li key={produto.id}>
               <div className="
                 flex gap-6
-                bg-[#1D1C1C]
+                bg-[#f0f7ee]
                 rounded-xl
                 shadow-lg
                 p-4
@@ -62,11 +62,11 @@ export const Cardapio = () => {
             
                 <div className="flex flex-col justify-between h-full">
                   <div>
-                    <h3 className="text-xl font-semibold text-white">
+                    <h3 className="text-xl font-semibold text-[#414141]">
                       {produto.nome}
                     </h3>
 
-                    <p className="text-gray-400 text-sm mt-2">
+                    <p className="text-gray-600 text-sm mt-2">
                       {produto.descricao}
                     </p>
                   </div>
@@ -76,9 +76,12 @@ export const Cardapio = () => {
                   </p>
                 </div>
 
-                <div className="flex-col justify-center ml-auto">
+                <div className="flex gap-6 justify-center ml-auto self-end flex">
                   <button className="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition cursor-pointer">
                     Adicionar
+                  </button>
+                  <button className="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition cursor-pointer">
+                    Ver mais detalhes
                   </button>
                 </div>
               </div>
