@@ -13,8 +13,13 @@ export async function getProdutos(categoriaId) {
   if (!response.ok) {
     throw new Error('Erro ao buscar produtos')
   }
+  const text = await response.text()
+  console.log("RETORNO DO BACKEND:")
+  console.log(text)
+
+  return JSON.parse(text)
   
-  return response.json()
+  // return response.json()
 }
 
 export async function getMesas() {
@@ -39,6 +44,20 @@ export async function criarPedido(pedido) {
     throw new Error("Erro ao criar pedido")
   }
 
+  return response.json()
+}
+
+export async function adicionarAoPedido(idPedido, idProduto, quantidade, observacao){
+  const response = await fetch(`http://localhost:8080/pedido/adicionar`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({ idPedido, idProduto, quantidade, observacao })
+  })
+  if (!response.ok) {
+    throw new Error("Erro ao adicionar produto ao pedido")
+  }
   return response.json()
 }
 
