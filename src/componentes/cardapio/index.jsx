@@ -1,14 +1,16 @@
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { adicionarAoPedido, getProdutos } from '../services/api'
+import { adicionarAoPedido, getCarrinho, getProdutos } from '../services/api'
 import { Sidebar } from '../sidebar'
 
 export const Cardapio = () => {
   const [Produtos, setProdutos] = useState([])
   const [loading, setLoading] = useState(true)
   const [produtoSelecionado, setProdutoSelecionado] = useState(null)
+  const [carrinho, setCarrinho] = useState(null)
   const [quantidade, setQuantidade] = useState(1)
   const [observacao, setObservacao] = useState('')
+  const [carrinhoProdutos, setCarrinhoProdutos] = useState([])
 
   const { pedidoId, idCategoria } = useParams()
 
@@ -27,8 +29,29 @@ export const Cardapio = () => {
     carregarProdutos()
   }, [idCategoria])
 
+  useEffect(() => {
+    async function carregarCarrinho() {
+      try {
+        const data = await getCarrinho(pedidoId)
+        setCarrinhoProdutos(data)
+      } catch (error) {
+        console.error(error)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    carregarCarrinho()
+  }, [pedidoId])
+
   return (
+    
     <div className="flex">
+        <header className='fixed top-0 right-0 p-6 z-50'>
+          <button onClick={() => setCarrinho(pedidoId)}>
+            <img src="/cart.svg" alt="Carrinho" className='w-8 h-8 cursor-pointer' />
+          </button>
+        </header>
       <Sidebar />
 
       <div
@@ -99,7 +122,7 @@ export const Cardapio = () => {
         </ul>
       </div>
 
-      {/* ================= DIALOG ================= */}
+      {/* ================= DIALOGS ================= */}
       {produtoSelecionado && (
         <div
           className="fixed inset-0 bg-black/50 flex items-center justify-center z-50"
@@ -190,6 +213,55 @@ export const Cardapio = () => {
           </div>
         </div>
       )}
+
+
+       {carrinho && (
+        <div
+          className="fixed inset-0 bg-black/50 flex items-top justify-end z-50"
+          onClick={() => setCarrinho(null)}
+        >
+          <div
+            onClick={(e) => e.stopPropagation()}
+            className="bg-white w-full max-w-lg rounded-2xl shadow-2xl p-6 relative animate-fadeIn"
+          >
+            {/* Botão fechar */}
+            <button
+              onClick={() => setCarrinho(null)}
+              className="absolute top-4 right-4 text-gray-500 hover:text-black text-xl"
+              
+            >
+              ✕
+            </button>
+
+            {/* Imagem */}
+            <div className="w-full grid mb-10 overflow-hidden rounded-lg">
+              <h1 className='font-bold text-3xl text-[#414141]'>Seu carrinho</h1>
+            </div>
+
+            {/* Produtos */}
+            <div className="mt-4 ">
+              <ul className='grid gap-4'>
+                {carrinhoProdutos.map(item => (
+                  <li key={item.id} className="flex justify-between items-center py-2 border-b">
+                    <div>
+                    <div className="flex gap-4 items-center">
+                      <img src={item.produtoImagem} alt={item.nome} className="w-16 h-16 object-cover rounded-lg" />
+                      <h3 className="text-lg font-semibold text-[#414141]">{item.nome}</h3>
+                    </div>
+                      <p className="text-gray-600">Quantidade: {item.quantidade}</p>
+                      <p className="text-gray-600">Observação: {item.observacao}</p>
+                    </div>
+                    <p className="text-green-500 font-bold">R$ {item.preco}</p>
+                  </li>
+                ))
+                  }
+              </ul>
+            </div>
+            </div>
+          </div>
+      )}
+
+
     </div>
   )
 }

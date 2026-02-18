@@ -13,13 +13,17 @@ export async function getProdutos(categoriaId) {
   if (!response.ok) {
     throw new Error('Erro ao buscar produtos')
   }
-  const text = await response.text()
-  console.log("RETORNO DO BACKEND:")
-  console.log(text)
 
-  return JSON.parse(text)
+  return response.json()
+}
+
+export async function getCarrinho(idPedido) {
+  const response = await fetch(  `http://localhost:8080/pedido/${idPedido}`);
+  if (!response.ok) {
+    throw new Error('Erro ao carregar carrinho')
+  }
   
-  // return response.json()
+   return response.json()
 }
 
 export async function getMesas() {
