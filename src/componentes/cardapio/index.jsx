@@ -7,12 +7,19 @@ export const Cardapio = () => {
   const [Produtos, setProdutos] = useState([])
   const [loading, setLoading] = useState(true)
   const [produtoSelecionado, setProdutoSelecionado] = useState(null)
-  const [carrinho, setCarrinho] = useState(null)
+  const [carrinho, setCarrinho] = useState(false)
   const [quantidade, setQuantidade] = useState(1)
   const [observacao, setObservacao] = useState('')
   const [carrinhoProdutos, setCarrinhoProdutos] = useState([])
 
   const { pedidoId, idCategoria } = useParams()
+
+  //calc carrinho
+
+  const total = carrinhoProdutos.reduce(
+  (acc, item) => acc + item.preco * item.quantidade,
+  0
+)
 
   useEffect(() => {
     async function carregarProdutos() {
@@ -100,7 +107,7 @@ export const Cardapio = () => {
                     </div>
 
                     <p className="text-green-400 font-bold text-lg mt-4">
-                      R$ {produto.preco}
+                      R$ {produto.preco.toFixed(2)}
                     </p>
                   </div>
 
@@ -197,6 +204,9 @@ export const Cardapio = () => {
                     alert("Produto adicionado com sucesso!")
                     setProdutoSelecionado(null)
 
+                     const carrinhoAtualizado = await getCarrinho(pedidoId)
+                      setCarrinhoProdutos(carrinhoAtualizado)
+
                   } catch (error) {
                     alert("Erro ao adicionar produto!")
                     console.error(error)
@@ -216,50 +226,87 @@ export const Cardapio = () => {
 
 
        {carrinho && (
-        <div
-          className="fixed inset-0 bg-black/50 flex items-top justify-end z-50"
-          onClick={() => setCarrinho(null)}
+  <div
+    className="fixed inset-0 bg-black/50 backdrop-blur-sm flex justify-end z-50"
+    onClick={() => setCarrinho(false)}
+  >
+    <div
+      onClick={(e) => e.stopPropagation()}
+      className="w-full max-w-md h-full bg-white shadow-2xl flex flex-col animate-fadeIn"
+    >
+      
+      {/* Header */}
+      <div className="p-6 flex justify-between items-center border-b">
+        <h1 className="text-2xl font-bold text-[#414141]">
+          Seu carrinho
+        </h1>
+
+        <button
+          onClick={() => setCarrinho(false)}
+          className="text-gray-500 hover:text-black text-xl"
         >
-          <div
-            onClick={(e) => e.stopPropagation()}
-            className="bg-white w-full max-w-lg rounded-2xl shadow-2xl p-6 relative animate-fadeIn"
-          >
-            {/* Botão fechar */}
-            <button
-              onClick={() => setCarrinho(null)}
-              className="absolute top-4 right-4 text-gray-500 hover:text-black text-xl"
-              
+          ✕
+        </button>
+      </div>
+
+      {/* Lista de produtos */}
+      <div className="flex-1 overflow-y-auto p-6 space-y-4">
+        {carrinhoProdutos.length === 0 ? (
+          <p className="text-gray-400 text-center mt-10">
+            Nenhum item adicionado ainda.
+          </p>
+        ) : (
+          carrinhoProdutos.map(item => (
+            <div
+              key={item.id}
+              className="bg-[#f0f7ee] rounded-xl p-4 shadow-md flex justify-between gap-4"
             >
-              ✕
-            </button>
+              <div className="flex gap-4">
+                <img
+                  src={item.produtoImagem}
+                  alt={item.nome}
+                  className="w-16 h-16 object-cover rounded-lg"
+                />
 
-            {/* Imagem */}
-            <div className="w-full grid mb-10 overflow-hidden rounded-lg">
-              <h1 className='font-bold text-3xl text-[#414141]'>Seu carrinho</h1>
-            </div>
+                <div>
+                  <h3 className="font-semibold text-[#414141]">
+                    {item.nome}
+                  </h3>
 
-            {/* Produtos */}
-            <div className="mt-4 ">
-              <ul className='grid gap-4'>
-                {carrinhoProdutos.map(item => (
-                  <li key={item.id} className="flex justify-between items-center py-2 border-b">
-                    <div>
-                    <div className="flex gap-4 items-center">
-                      <img src={item.produtoImagem} alt={item.nome} className="w-16 h-16 object-cover rounded-lg" />
-                      <h3 className="text-lg font-semibold text-[#414141]">{item.nome}</h3>
-                    </div>
-                      <p className="text-gray-600">Quantidade: {item.quantidade}</p>
-                      <p className="text-gray-600">Observação: {item.observacao}</p>
-                    </div>
-                    <p className="text-green-500 font-bold">R$ {item.preco}</p>
-                  </li>
-                ))
-                  }
-              </ul>
+                  <p className="text-sm text-gray-600">
+                    Qtd: {item.quantidade}
+                  </p>
+
+                  {item.observacao && (
+                    <p className="text-xs text-gray-500 mt-1">
+                      Obs: {item.observacao}
+                    </p>
+                  )}
+                </div>
+              </div>
+
+              <div className="flex items-center">
+                <p className="text-green-600 font-bold">
+                  R$ {(item.preco * item.quantidade).toFixed(2)}
+                </p>
+              </div>
             </div>
-            </div>
-          </div>
-      )}
+          ))
+        )}
+      </div>
+
+      {/* Total */}
+      <div className="border-t bg-white p-6">
+        <div className="flex justify-between items-center text-lg font-semibold text-[#414141]">
+          <span>Total</span>
+          <span className="text-green-600 text-xl font-bold">
+            R$ {total.toFixed(2)}
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+)}
 
 
     </div>
