@@ -65,3 +65,23 @@ export async function adicionarAoPedido(idPedido, idProduto, quantidade, observa
   return response.json()
 }
 
+export async function getPedidoDialog(idPedido) {
+  const response = await fetch(`http://localhost:8080/pedido/grid/${idPedido}`)
+
+  if (!response.ok) {
+    throw new Error('Erro ao buscar pedido')
+  }
+
+  return response.json()
+}
+
+export async function getGrid() {
+  const response = await fetch(`http://localhost:8080/pedido/grid`)
+
+  if (!response.ok) {
+    throw new Error('Erro ao carregar grid')
+  }
+
+  return response.json()
+}
+

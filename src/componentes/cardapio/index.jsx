@@ -75,7 +75,7 @@ export const Cardapio = () => {
               <li key={produto.id}>
                 <div className="
                   flex gap-6
-                  bg-[#f0f7ee]
+                  bg-emerald-50
                   rounded-xl
                   shadow-lg
                   p-4
