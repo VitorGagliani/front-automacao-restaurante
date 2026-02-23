@@ -75,11 +75,22 @@ export async function getPedidoDialog(idPedido) {
   return response.json()
 }
 
-export async function getGrid() {
-  const response = await fetch(`http://localhost:8080/pedido/grid`)
+export async function getGrid({ status, mesa, inicio, fim } = {}) {
+  const params = new URLSearchParams()
+
+  if (status) params.append("status", status)
+  if (mesa) params.append("mesa", mesa)
+  if (inicio) params.append("inicio", inicio)
+  if (fim) params.append("fim", fim)
+
+  const url = `http://localhost:8080/pedido/grid${
+    params.toString() ? `?${params.toString()}` : ""
+  }`
+
+  const response = await fetch(url)
 
   if (!response.ok) {
-    throw new Error('Erro ao carregar grid')
+    throw new Error("Erro ao carregar grid")
   }
 
   return response.json()
