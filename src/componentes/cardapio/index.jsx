@@ -167,7 +167,7 @@ export const Cardapio = () => {
               </p>
 
               <p className="text-green-500 font-bold text-xl mt-4">
-                R$ {produtoSelecionado.preco}
+                R$ {produtoSelecionado.preco.toFixed(2)}
               </p>
 
               <input
