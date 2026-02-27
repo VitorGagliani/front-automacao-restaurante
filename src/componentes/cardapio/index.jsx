@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams,useLocation } from 'react-router-dom'
 import { adicionarAoPedido, getCarrinho, getProdutos } from '../services/api'
 import { Sidebar } from '../sidebar'
+
 
 export const Cardapio = () => {
   const [Produtos, setProdutos] = useState([])
@@ -11,8 +12,10 @@ export const Cardapio = () => {
   const [quantidade, setQuantidade] = useState(1)
   const [observacao, setObservacao] = useState('')
   const [carrinhoProdutos, setCarrinhoProdutos] = useState([])
+  const location = useLocation()
+  const mesa = location.state?.mesa
 
-  const { pedidoId, idCategoria } = useParams()
+  const { pedidoId, idCategoria} = useParams()
 
   //calc carrinho
 
@@ -193,9 +196,11 @@ export const Cardapio = () => {
               <button
                 className="mt-6 w-full bg-green-500 text-white py-3 rounded-xl hover:bg-green-600 transition"
                onClick={async () => {
+                
                   try {
                     await adicionarAoPedido(
                       pedidoId,
+                      mesa,
                       produtoSelecionado.id,
                       quantidade,
                       observacao

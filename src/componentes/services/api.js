@@ -51,13 +51,13 @@ export async function criarPedido(pedido) {
   return response.json()
 }
 
-export async function adicionarAoPedido(idPedido, idProduto, quantidade, observacao){
+export async function adicionarAoPedido(idPedido, mesa, idProduto, quantidade, observacao){
   const response = await fetch(`http://localhost:8080/pedido/adicionar`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
     },
-    body: JSON.stringify({ idPedido, idProduto, quantidade, observacao })
+    body: JSON.stringify({ idPedido, mesa,idProduto, quantidade, observacao })
   })
   if (!response.ok) {
     throw new Error("Erro ao adicionar produto ao pedido")

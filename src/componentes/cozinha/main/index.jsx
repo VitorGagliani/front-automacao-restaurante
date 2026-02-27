@@ -31,36 +31,35 @@ export const Cozinha = () => {
   }, [pedidoSelecionado]);
 
   const buscarPedidos = async () => {
-  try {
-    const data = await getGrid({
-      status: status === "All" || status === "" ? null : status,
-      inicio: inicio || null,
-      fim: fim || null
-    });
+    try {
+      const data = await getGrid({
+        status: status === "All" || status === "" ? null : status,
+        inicio: inicio || null,
+        fim: fim || null,
+      });
 
-    setPedidos(data);
-  } catch (error) {
-    console.error("Erro ao buscar pedidos:", error);
-  }
-};
+      setPedidos(data);
+    } catch (error) {
+      console.error("Erro ao buscar pedidos:", error);
+    }
+  };
 
   useEffect(() => {
     buscarPedidos();
   }, []);
 
-useEffect(() => {
-  buscarPedidos(); // refresh a cada 10 sec
+  useEffect(() => {
+    buscarPedidos(); // refresh a cada 10 sec
 
-  const interval = setInterval(() => {
-    buscarPedidos();
-  }, 10000);
+    const interval = setInterval(() => {
+      buscarPedidos();
+    }, 10000);
 
-  return () => clearInterval(interval);
-}, [status, inicio, fim]);
+    return () => clearInterval(interval);
+  }, [status, inicio, fim]);
 
   return (
     <div className="min-h-screen bg-[#f8fafc]">
-      {/* Header */}
       <div className="px-8 pt-8 pb-4">
         <h1 className="text-4xl font-bold text-[#1e293b] tracking-tight">
           Acompanhamento de Pedidos
@@ -81,7 +80,7 @@ useEffect(() => {
             <select
               value={status}
               onChange={(e) => setStatus(e.target.value)}
-              className="bg-gray-50 px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-emerald-400 outline-none transition w-52"
+              className="bg-gray-50 px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-emerald-400 outline-none transition w-52 cursor-pointer"
             >
               <option value="All">Todos</option>
               <option value="Aberto">Aberto</option>
@@ -100,14 +99,14 @@ useEffect(() => {
                 type="date"
                 value={inicio}
                 onChange={(e) => setInicio(e.target.value)}
-                className="bg-gray-50 px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-emerald-400 outline-none transition"
+                className="bg-gray-50 px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-emerald-400 outline-none transition cursor-pointer"
               />
               <span className="text-gray-400">até</span>
               <input
                 type="date"
                 value={fim}
                 onChange={(e) => setFim(e.target.value)}
-                className="bg-gray-50 px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-emerald-400 outline-none transition"
+                className="bg-gray-50 px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-emerald-400 outline-none transition cursor-pointer"
               />
             </div>
           </div>
@@ -125,38 +124,44 @@ useEffect(() => {
               <div>
                 <div className="flex justify-between items-center mb-4">
                   <h2 className="text-lg font-bold text-[#0f172a]">
-                    Pedido #{pedido.id}
+                    Comanda #{pedido.id}
                   </h2>
 
-                  {/* Tag Status */}
-                  <span
-                    className={`text-xs px-3 py-1 rounded-full font-semibold ${
-                      pedido.status === "Aberto"
-                        ? "bg-yellow-100 text-yellow-700"
-                        : pedido.status === "EmPreparo"
-                          ? "bg-blue-100 text-blue-700 "
-                          : "bg-emerald-100 text-emerald-700"
-                    }`}
-                  >
-                    {/* pra converter do back */}
-                    {pedido.status.replace(/([A-Z])/g, " $1").trim()}
+                  <span className="text-xs px-3 py-1 rounded-full font-semibold text-gray-700">
+                    <select
+                      defaultValue={pedido.status}
+                      className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-emerald-400 outline-none transition cursor-pointer"
+                    >
+                      <option value="Aberto">Aberto</option>
+                      <option value="EmPreparo">Em preparo</option>
+                      <option value="Finalizado">Finalizado</option>
+                    </select>
                   </span>
                 </div>
 
                 <p className="text-gray-600 text-sm">
-                  <span className="font-semibold">Mesa:</span> {pedido.mesa}
+                  <span className="font-semibold">Produto:</span>{" "}
+                  {pedido.Produto}
                 </p>
 
                 <p className="text-gray-600 text-sm mt-1">
-                  <span className="font-semibold">Data:</span>{" "}
-                  {/* trocar o - para / */}
-                  {pedido.hora_pedido?.split("-").reverse().join("/")}
+                  <span className="font-semibold">Quantidade:</span>{" "}
+                  {pedido.quantidade}
+                </p>
+
+                <p className="text-gray-600 text-sm mt-1">
+                  <span className="font-semibold">Obs:</span>{" "}
+                  {pedido.observacao || "—"}
+                </p>
+
+                <p className="text-gray-600 text-sm mt-1">
+                  <span className="font-semibold">Mesa:</span> {pedido.mesa_id}
                 </p>
               </div>
 
               <button
-                onClick={() => setPedidoSelecionado(pedido.id)}
-                className="mt-6 bg-emerald-500 hover:bg-emerald-600 text-white py-2 rounded-xl font-semibold transition-all duration-200"
+                onClick={() => setPedidoSelecionado(pedido.pedido_id)}
+                className="mt-6 bg-emerald-500 hover:bg-emerald-600 text-white py-2 rounded-xl font-semibold transition-all duration-200 cursor-pointer"
               >
                 Ver Pedido
               </button>
